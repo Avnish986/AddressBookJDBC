@@ -15,4 +15,5 @@ public class AddressBookJDBCTest {
     	List<AddressBookData> addList = service.readAddressBookData(IOService.DB_IO);
     	Assert.assertEquals(5, addList.size());
     }
+
 }
