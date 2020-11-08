@@ -1,6 +1,11 @@
 package com.sql.jdbc;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,13 +39,14 @@ public class AddressBookRESTAPI {
 		AddressBookData[] arrayOfBooks = new Gson().fromJson(response.asString(), AddressBookData[].class);
 		return arrayOfBooks;
 	}
-	
+
 	@Test
 	public void givenNewPerson_WhenAdded_ShouldMatch201ResponseAndCount() {
 		AddressBookService service;
 		AddressBookData[] ArrayOfEmps = getAddressBookList();
 		service = new AddressBookService(Arrays.asList(ArrayOfEmps));
-		AddressBookData personData = new AddressBookData(3, "mno", "pqr", "12 Street", "city3", "state3", "1313121","9999999997","mno@gmail.com");
+		AddressBookData personData = new AddressBookData(3, "mno", "pqr", "12 Street", "city3", "state3", "1313121",
+				"9999999997", "mno@gmail.com");
 		Response response = addPersonToJsonServer(personData);
 		int statusCode = response.getStatusCode();
 		Assert.assertEquals(201, statusCode);
@@ -57,25 +63,28 @@ public class AddressBookRESTAPI {
 		request.body(empJson);
 		return request.post("/persons");
 	}
-	
+
 	@Test
 	public void givenNewPersons_WhenAdded_ShouldMatch201ResponseAndCount() {
 		AddressBookService service;
 		AddressBookData[] ArrayOfEmps = getAddressBookList();
 		service = new AddressBookService(Arrays.asList(ArrayOfEmps));
-		AddressBookData[] arrayPersonData = { new AddressBookData(4, "stu", "vwx", "125 Street", "city4", "state4", "19013121","9999999996","stu@gmail.com"),
-				new AddressBookData(5, "yzq", "abc", "123 Street", "city5", "state5", "1310021","9999999994","yzq@gmail.com")};
+		AddressBookData[] arrayPersonData = {
+				new AddressBookData(4, "stu", "vwx", "125 Street", "city4", "state4", "19013121", "9999999996",
+						"stu@gmail.com"),
+				new AddressBookData(5, "yzq", "abc", "123 Street", "city5", "state5", "1310021", "9999999994",
+						"yzq@gmail.com") };
 		for (AddressBookData personData : Arrays.asList(arrayPersonData)) {
-		Response response = addPersonToJsonServer(personData);
-		int statusCode = response.getStatusCode();
-		Assert.assertEquals(201, statusCode);
-		personData = new Gson().fromJson(response.asString(), AddressBookData.class);
-		service.addPerson(personData, IOService.REST_IO);
+			Response response = addPersonToJsonServer(personData);
+			int statusCode = response.getStatusCode();
+			Assert.assertEquals(201, statusCode);
+			personData = new Gson().fromJson(response.asString(), AddressBookData.class);
+			service.addPerson(personData, IOService.REST_IO);
 		}
 		long entries = service.countEntries();
 		Assert.assertEquals(5, entries);
 	}
-	
+
 	@Test
 	public void givenNewCityForPerson_WhenUpdated_ShouldMatch200ResponseAndCount() {
 		AddressBookService service;
@@ -91,4 +100,5 @@ public class AddressBookRESTAPI {
 		int statusCode = response.getStatusCode();
 		Assert.assertEquals(200, statusCode);
 	}
+
 }

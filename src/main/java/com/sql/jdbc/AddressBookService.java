@@ -105,12 +105,12 @@ public class AddressBookService {
 		return addList.size();
 
 	}
-	
+
 	public void addPerson(AddressBookData personData, IOService ioService) {
-		
+
 		addList.add(personData);
 	}
-	
+
 	public void updatePersonCity(String name, String city, IOService ioService) {
 		AddressBookData personData = this.getAddressBookData(name);
 		if (personData != null)
