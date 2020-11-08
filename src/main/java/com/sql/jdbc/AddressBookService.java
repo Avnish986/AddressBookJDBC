@@ -117,4 +117,11 @@ public class AddressBookService {
 			personData.city = city;
 	}
 
+	public void deletePersonData(String name, IOService ioService) {
+		if (ioService.equals(IOService.REST_IO)) {
+			AddressBookData personData = this.getAddressBookData(name);
+			addList.remove(personData);
+		}
+	}
+
 }
